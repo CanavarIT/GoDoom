@@ -1,23 +1,33 @@
-# Builds
-demo/addons/doom/bin/
-godot-cpp/
-*.7z
+# Build artifacts
+*.os
+*.o
+*.a
+.sconsign.dblite
+**/bin/*.so
+!**/bin/.gitkeep
 
-# Backups / generated
+# Godot
+**/.godot/
+**/android/
+*.apk
+*.aab
+*.pck
+
+# Local / junk
 *.bak
-*.uid
-*.import
+*.bin
+test_hello.txt
+diagnostic_report.txt
+apk_*.so
+lib/
 
-# Godot / Android
-demo/.nomedia
+# Secrets
+*.keystore
+*.jks
+export_credentials.cfg
+**/.godot/export_credentials.cfg
 
-# Local scripts
-backup.sh
-sync_android.sh
-check_apk.py
-
-# Screenshots
-demo/Picsart_*.png
-
-# Optional: large IWAD (uncomment if you don't want it in repo)
-# doom1.wad
+# IDE
+.idea/
+*.iml
+.DS_Store
