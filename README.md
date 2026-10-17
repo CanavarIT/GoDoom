@@ -1,4 +1,4 @@
-<img width="2400" height="1080" alt="1000835468" src="https://github.com/user-attachments/assets/068e8728-3288-4101-af7c-dc5185cb4eb6" />
+<img width="2400" height="1080" alt="GoDoom screenshot" src="https://github.com/user-attachments/assets/068e8728-3288-4101-af7c-dc5185cb4eb6" />
 
 # GoDoom
 
@@ -34,22 +34,25 @@ Touch controls included. Shareware IWAD is optional in the repo.
 
 ## Project layout
 
+```text
 GoDoom/
 ├── SConstruct              # Build GDExtension
 ├── src/                    # DoomNode, platform glue, stubs
 ├── thirdparty/doomgeneric/ # Engine sources
-├── godot-cpp/              # Godot C++ bindings (submodule or local)
+├── godot-cpp/              # Godot C++ bindings (submodule)
 └── demo/                   # Godot project
     ├── main.gd / main.tscn
     ├── doom1.wad           # Shareware (if present)
     └── addons/doom/
         ├── doom.gdextension
         └── bin/            # Built .so files
+```
 
 ---
 
 ## Build (Android arm64)
 
+```bash
 git clone --recursive https://github.com/CanavarIT/GoDoom.git
 cd GoDoom
 
@@ -62,11 +65,13 @@ scons platform=android target=template_debug arch=arm64 api_version=4.3 -j$(npro
 
 # Release
 scons platform=android target=template_release arch=arm64 api_version=4.3 -j$(nproc)
+```
 
-Output:
-
+**Output:**
+```text
 demo/addons/doom/bin/libdoom.android.template_debug.arm64.so
 demo/addons/doom/bin/libdoom.android.template_release.arm64.so
+```
 
 ---
 
@@ -79,6 +84,7 @@ demo/addons/doom/bin/libdoom.android.template_release.arm64.so
 
 ### `doom.gdextension` (example)
 
+```ini
 [configuration]
 
 entry_symbol = "doom_library_init"
@@ -89,6 +95,7 @@ reloadable = false
 
 android.debug.arm64 = "res://addons/doom/bin/libdoom.android.template_debug.arm64.so"
 android.release.arm64 = "res://addons/doom/bin/libdoom.android.template_release.arm64.so"
+```
 
 ---
 
