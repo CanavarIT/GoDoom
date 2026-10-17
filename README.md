@@ -4,13 +4,13 @@ Classic **Doom** on **Godot 4** for **Android**, using a native **GDExtension** 
 
 Touch controls included. Shareware IWAD is optional in the repo.
 
-**Repository:** https://github.com/CanavarIT/GoDoom
+**Repository:** [https://github.com/CanavarIT/GoDoom](https://github.com/CanavarIT/GoDoom)
 
 ---
 
 ## Features
 
-- Native Doom logic via doomgeneric
+- Native Doom logic via [doomgeneric](https://github.com/ozkl/doomgeneric)
 - Godot 4 GDExtension (`DoomNode`)
 - Android **arm64** (debug / release `.so`)
 - On-screen touch controls (stick, fire, use, run, strafe, weapons 1–7)
@@ -46,28 +46,81 @@ GoDoom/
 
 ---
 
-## Architecture
+## Build (Android arm64)
 
-DoomNode (C++)
-    -> doomgeneric_Create / doomgeneric_Tick
-    -> doomgeneric (C)  reads WAD, renders into DG_ScreenBuffer
-    -> DG_* functions (doomgeneric_godot.c)
-    -> Godot pulls framebuffer -> ImageTexture
+git clone --recursive https://github.com/CanavarIT/GoDoom.git
+cd GoDoom
+
+# Set NDK (example paths — adjust to your machine)
+export ANDROID_HOME=...
+export ANDROID_NDK_ROOT=$ANDROID_HOME/ndk/29.0.14033849
+
+# Debug
+scons platform=android target=template_debug arch=arm64 api_version=4.3 -j$(nproc)
+
+# Release
+scons platform=android target=template_release arch=arm64 api_version=4.3 -j$(nproc)
+
+Output:
+
+demo/addons/doom/bin/libdoom.android.template_debug.arm64.so
+demo/addons/doom/bin/libdoom.android.template_release.arm64.so
 
 ---
 
-## Next steps
+## Run in Godot
 
-1. Fix pixel format (RGB/BGR) after the first launch.
-2. Bind real time (`DG_GetTicksMs`) to `Time.get_ticks_msec()`.
-3. Add touch controls for Android.
-4. Sound (via `FEATURE_SOUND` + SDL or Godot AudioServer).
-5. Multi-instance support (currently single-instance).
+1. Open the `demo/` folder in Godot 4.
+2. Ensure `addons/doom/doom.gdextension` points at the built libraries.
+3. Put `doom1.wad` in `demo/` if it is not already there (shareware or your own IWAD).
+4. Run the main scene, or **Project → Export → Android**.
+
+### `doom.gdextension` (example)
+
+[configuration]
+
+entry_symbol = "doom_library_init"
+compatibility_minimum = "4.3"
+reloadable = false
+
+[libraries]
+
+android.debug.arm64 = "res://addons/doom/bin/libdoom.android.template_debug.arm64.so"
+android.release.arm64 = "res://addons/doom/bin/libdoom.android.template_release.arm64.so"
+
+---
+
+## Controls
+
+| Action | Control |
+|--------|---------|
+| Move | Virtual stick |
+| Fire | FIRE |
+| Use / open | USE |
+| Run | RUN (toggle) |
+| Strafe | STRAFE |
+| Weapons | 1–7 |
+| Menu | MENU / OK / MAP |
+
+Keyboard (desktop): WASD / arrows, Ctrl = fire, Space = use, Shift = run.
+
+---
+
+## Notes
+
+- Sound is stubbed (`FEATURE_SOUND=0`) for a simpler Android build.
+- If the WAD is embedded at compile time, the library size is ~5 MB and no external WAD is required at runtime.
+- On Android, export **Debug** or ship both debug and release `.so` files so the loader always finds a library.
 
 ---
 
 ## License
 
-- Wrapper code — MIT / Public Domain.
-- doomgeneric and original Doom — GPLv2+.
-- Commercial use requires a license for the WAD.
+- **This project** (wrapper, demo scripts): GPLv2
+- **doomgeneric**: GPLv2 (see `thirdparty/doomgeneric/`)
+- **godot-cpp**: MIT
+- **Doom shareware IWAD** (`doom1.wad`): © id Software — free shareware data only
+
+Full commercial Doom / Doom II data are **not** distributed. Buy the games and use your own IWAD for the full content.
+
+Doom® is a registered trademark of id Software LLC.
