@@ -1,0 +1,11 @@
+[configuration]
+
+entry_symbol = "doom_library_init"
+compatibility_minimum = "4.1"
+reloadable = true
+
+[libraries]
+
+android.arm64 = "res://addons/doom/bin/libdoom.android.template_debug.arm64.so"
+android.debug.arm64 = "res://addons/doom/bin/libdoom.android.template_debug.arm64.so"
+android.release.arm64 = "res://addons/doom/bin/libdoom.android.template_debug.arm64.so"
