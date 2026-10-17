@@ -1,4 +1,23 @@
-*.os
-.sconsign.dblite
-**/.godot/
-**/android/
+# Builds
+demo/addons/doom/bin/
+godot-cpp/
+*.7z
+
+# Backups / generated
+*.bak
+*.uid
+*.import
+
+# Godot / Android
+demo/.nomedia
+
+# Local scripts
+backup.sh
+sync_android.sh
+check_apk.py
+
+# Screenshots
+demo/Picsart_*.png
+
+# Optional: large IWAD (uncomment if you don't want it in repo)
+# doom1.wad
