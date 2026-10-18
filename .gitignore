@@ -31,3 +31,4 @@ export_credentials.cfg
 .idea/
 *.iml
 .DS_Store
+src/wad_path.h
